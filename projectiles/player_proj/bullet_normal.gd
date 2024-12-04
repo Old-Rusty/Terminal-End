@@ -1,5 +1,4 @@
 extends CharacterBody2D
-@onready var despawnTimer: Timer = $despawnTimer
 var velo = Vector2.ZERO
 
 func _physics_process(delta):
