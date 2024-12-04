@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://cj3kbaaj4va3y"]
+
+[ext_resource type="Script" path="res://player/weapons/gun.gd" id="1_164mm"]
+[ext_resource type="Texture2D" uid="uid://bjvhi7mtn7ds" path="res://common/assets/weapons/default_energy_weapon.png" id="2_77yx7"]
+[ext_resource type="PackedScene" uid="uid://byvllhjxoxi54" path="res://projectiles/player_proj/energy_bullet.tscn" id="2_d7ubw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yj0vp"]
+atlas = ExtResource("2_77yx7")
+region = Rect2(96, 0, 16, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u2uqi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yj0vp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Gun" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_164mm")
+energy_bullet = ExtResource("2_d7ubw")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_u2uqi")
+offset = Vector2(4.5, 0)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(12, 0)
+gizmo_extents = 20.0
+
+[node name="reload" type="Timer" parent="."]
+one_shot = true
+autostart = true

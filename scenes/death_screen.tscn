@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct2rvi81amdx1"]
+
+[ext_resource type="Script" path="res://scenes/death_screen.gd" id="1_fyc42"]
+
+[node name="DeathScreen" type="Node2D"]
+script = ExtResource("1_fyc42")
+
+[node name="TextEdit" type="Label" parent="."]
+offset_left = 357.0
+offset_top = 95.0
+offset_right = 806.0
+offset_bottom = 232.0
+theme_override_font_sizes/font_size = 100
+text = "You Died"
+
+[node name="Retry" type="Button" parent="."]
+offset_left = 526.0
+offset_top = 271.0
+offset_right = 646.0
+offset_bottom = 340.0
+text = "Retry"
+
+[node name="Main_menu" type="Button" parent="."]
+offset_left = 527.0
+offset_top = 363.0
+offset_right = 641.0
+offset_bottom = 436.0
+text = "Main Menu"
+
+[connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="Main_menu" to="." method="_on_main_menu_pressed"]

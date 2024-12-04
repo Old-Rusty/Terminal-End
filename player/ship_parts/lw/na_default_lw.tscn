@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://646mhl2eh75h"]
+
+[ext_resource type="Texture2D" uid="uid://bounn7jfjd1vu" path="res://common/assets/ship_parts_player/lw/nova_alliance_default_lw_sprite.png" id="1_k02qm"]
+[ext_resource type="PackedScene" uid="uid://dy6phxas5vwwq" path="res://common/scenes/Trails.tscn" id="3_n5wvd"]
+[ext_resource type="Script" path="res://common/scripts/WingTrails.gd" id="4_a41fg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ms0dm"]
+atlas = ExtResource("1_k02qm")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bfgxs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ms0dm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_7n6gt"]
+offsets = PackedFloat32Array(0, 0.151786, 1)
+colors = PackedColorArray(1, 0.843137, 0, 0.623529, 1, 0.843137, 0, 0.184314, 1, 0.843137, 0, 0)
+
+[node name="NaDefaultLw" type="Node2D"]
+z_index = -1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_bfgxs")
+offset = Vector2(-16, 0)
+
+[node name="HurtBox" type="Area2D" parent="." groups=["player"]]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtBox"]
+polygon = PackedVector2Array(-34, 5, 10, -7, 10, 9)
+
+[node name="TrailPos" type="Marker2D" parent="."]
+position = Vector2(-37, 0)
+
+[node name="Trails" parent="TrailPos" instance=ExtResource("3_n5wvd")]
+top_level = true
+z_index = -1
+points = PackedVector2Array(-37, 0)
+gradient = SubResource("Gradient_7n6gt")
+script = ExtResource("4_a41fg")
+MAX_LENGTH = 10
+
+[node name="TrailPos2" type="Marker2D" parent="."]
+position = Vector2(-37, 11)
+
+[node name="Trails2" parent="TrailPos2" instance=ExtResource("3_n5wvd")]
+top_level = true
+z_index = -1
+points = PackedVector2Array(-37, 0)
+gradient = SubResource("Gradient_7n6gt")
+script = ExtResource("4_a41fg")
+MAX_LENGTH = 10

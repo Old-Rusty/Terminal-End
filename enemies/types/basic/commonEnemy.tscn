@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxgubbslln2du"]
+
+[ext_resource type="Texture2D" uid="uid://d3dkctvw44m6v" path="res://icon.svg" id="1_cnpmn"]
+[ext_resource type="Script" path="res://enemies/types/basic/commonEnemy.gd" id="1_ipobv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_83rv0"]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dnhoe"]
+radius = 24.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p7ql0"]
+radius = 16.0
+
+[node name="CommonEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 5
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_ipobv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_cnpmn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.25, 0.25)
+shape = SubResource("CircleShape2D_83rv0")
+
+[node name="AttackRange" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+shape = SubResource("CircleShape2D_dnhoe")
+debug_color = Color(0.407843, 0.607843, 0, 0.419608)
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_p7ql0")
+debug_color = Color(0.980392, 0, 0.368627, 0.419608)
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]

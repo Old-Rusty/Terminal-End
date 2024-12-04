@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwluuwhnwrmmg"]
+
+[ext_resource type="Texture2D" uid="uid://bc1qm5wxeupre" path="res://common/assets/MK1_gas_thrusters.png" id="1_ngnv8"]
+[ext_resource type="PackedScene" uid="uid://dy6phxas5vwwq" path="res://common/scenes/Trails.tscn" id="2_qgxhk"]
+[ext_resource type="Script" path="res://common/scenes/TrailsMK1.gd" id="3_io0o6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88cpk"]
+atlas = ExtResource("1_ngnv8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pjngi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88cpk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Mk1Thrusters" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_pjngi")
+
+[node name="Trails" parent="." instance=ExtResource("2_qgxhk")]
+top_level = true
+z_index = -1
+position = Vector2(0, 1)
+points = PackedVector2Array(0, 0)
+width = 4.0
+script = ExtResource("3_io0o6")
+MAX_LENGTH = 5

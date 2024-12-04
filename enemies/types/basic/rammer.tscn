@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://0uuu4f0agkby"]
+
+[ext_resource type="Script" path="res://enemies/types/basic/rammer.gd" id="1_1jy2v"]
+[ext_resource type="Texture2D" uid="uid://d3dkctvw44m6v" path="res://icon.svg" id="2_l7hsl"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_6ore5"]
+friction = 0.1
+bounce = 0.4
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w4g2v"]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v5dei"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w3lf4"]
+radius = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jb7yd"]
+radius = 192.167
+
+[node name="Rammer" type="RigidBody2D" groups=["charge_enemy", "enemy"]]
+collision_layer = 4
+collision_mask = 5
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_6ore5")
+gravity_scale = 0.0
+script = ExtResource("1_1jy2v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_l7hsl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_w4g2v")
+
+[node name="HurtBox" type="Area2D" parent="." groups=["charge_enemy", "enemy"]]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_v5dei")
+debug_color = Color(0.972549, 0, 0.45098, 0.419608)
+
+[node name="stunTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StunRange" type="Area2D" parent="."]
+disable_mode = 2
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StunRange"]
+shape = SubResource("CircleShape2D_w3lf4")
+debug_color = Color(0.596078, 0.372549, 1, 0.419608)
+
+[node name="RamRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RamRange"]
+shape = SubResource("CircleShape2D_jb7yd")
+debug_color = Color(0.596078, 0.545098, 0, 0.419608)
+
+[connection signal="area_entered" from="HurtBox" to="." method="_on_hurt_box_area_entered"]
+[connection signal="timeout" from="stunTimer" to="." method="_on_stun_timer_timeout"]
+[connection signal="area_entered" from="StunRange" to="." method="_on_stun_range_area_entered"]
+[connection signal="area_entered" from="RamRange" to="." method="_on_ram_range_area_entered"]
+[connection signal="area_exited" from="RamRange" to="." method="_on_ram_range_area_exited"]

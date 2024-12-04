@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctnpg0cug5xce"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_xi78p"]
+[ext_resource type="PackedScene" uid="uid://0uuu4f0agkby" path="res://enemies/types/basic/rammer.tscn" id="2_5yrir"]
+[ext_resource type="Texture2D" uid="uid://b2vs756w1a3ps" path="res://common/assets/SBS - Seamless Space Backgrounds - Large 1024x1024/Large 1024x1024/Blue Nebula/Blue_Nebula_01-1024x1024.png" id="3_xcbbf"]
+[ext_resource type="PackedScene" uid="uid://dh671unvrxu0l" path="res://player/playerShip.tscn" id="5_4m4qy"]
+[ext_resource type="Script" path="res://scenes/Path2D.gd" id="5_6ghg7"]
+
+[sub_resource type="Curve2D" id="Curve2D_roxpa"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -949.455, -906.957, 0, 0, 0, 0, 900.586, -898.859, 0, 0, 0, 0, 900.586, 850.272, 0, 0, 0, 0, -956.437, 842.174, 0, 0, 0, 0, -949.455, -906.957)
+}
+point_count = 5
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_xi78p")
+commonEnemy = ExtResource("2_5yrir")
+MaxEnemyCount = 5
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(4096, 4096)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("3_xcbbf")
+centered = false
+
+[node name="Path2D" type="Path2D" parent="."]
+scale = Vector2(1.14592, 0.987919)
+curve = SubResource("Curve2D_roxpa")
+script = ExtResource("5_6ghg7")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(900.586, 119.963)
+rotation = 1.5708
+progress = 2868.88
+
+[node name="Marker2D" type="Marker2D" parent="Path2D/PathFollow2D"]
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[node name="playerShip" parent="." instance=ExtResource("5_4m4qy")]
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

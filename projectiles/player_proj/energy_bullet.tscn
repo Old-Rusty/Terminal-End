@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://byvllhjxoxi54"]
+
+[ext_resource type="Script" path="res://projectiles/player_proj/bullet_normal.gd" id="1_ulwbb"]
+[ext_resource type="Texture2D" uid="uid://d3dkctvw44m6v" path="res://icon.svg" id="2_u14yq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1cc2v"]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tyr4y"]
+radius = 120.0
+
+[node name="EnergyBullet" type="CharacterBody2D" groups=["player_proj"]]
+z_index = 1
+scale = Vector2(0.1, 0.1)
+collision_layer = 2
+collision_mask = 16
+motion_mode = 1
+wall_min_slide_angle = 0.0
+safe_margin = 0.1
+script = ExtResource("1_ulwbb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_u14yq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1cc2v")
+
+[node name="Area2D" type="Area2D" parent="." groups=["player_proj"]]
+collision_layer = 2
+collision_mask = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(0.6, 0.6)
+shape = SubResource("CircleShape2D_tyr4y")
+debug_color = Color(0.921569, 0.0745098, 0.658824, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(7, 7)
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

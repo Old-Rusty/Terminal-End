@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://buhs2jeorpteh"]
+
+[ext_resource type="Texture2D" uid="uid://csq4yo4uyr4pl" path="res://common/assets/ship_parts_player/hull/nova_alliance_default_hull_sprite.png" id="1_0tnvy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymxjn"]
+atlas = ExtResource("1_0tnvy")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lih2"]
+atlas = ExtResource("1_0tnvy")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qjss1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0tnvy")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ymxjn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lih2")
+}],
+"loop": true,
+"name": &"inv",
+"speed": 5.0
+}]
+
+[node name="NaDefaultHull" type="Node2D"]
+
+[node name="hull" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -25)
+sprite_frames = SubResource("SpriteFrames_qjss1")
+autoplay = "default"
+frame_progress = 0.194434
+
+[node name="HurtBox" type="Area2D" parent="." groups=["player"]]
+position = Vector2(0, -25)
+collision_mask = 12
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HurtBox"]
+polygon = PackedVector2Array(0, -32, 12, -19, 12, -14, 30, 4, 30, 16, 23, 23, 11, 26, 3, 26, 2, 28, -2, 28, -3, 26, -11, 26, -23, 23, -30, 16, -30, 4, -12, -14, -12, -19)
+
+[node name="weapon1_anchor" type="Marker2D" parent="."]
+position = Vector2(0, -23)
+
+[node name="weapon2_anchor" type="Marker2D" parent="."]
+position = Vector2(0, -33)
+
+[node name="rw_anchor" type="Marker2D" parent="."]
+position = Vector2(24, -8)
+
+[node name="lw_anchor" type="Marker2D" parent="."]
+position = Vector2(-24, -8)

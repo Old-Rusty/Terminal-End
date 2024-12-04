@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://cr4qa81f5swym"]
+
+[node name="NaDefaultRwCollider" type="CollisionPolygon2D"]
+polygon = PackedVector2Array(38, 12, 38, -1, 36, -1, 36, 0, 0, -8, -12, -8, -12, 11, 10, 9, 22, 9)

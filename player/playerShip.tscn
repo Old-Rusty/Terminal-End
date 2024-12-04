@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://dh671unvrxu0l"]
+
+[ext_resource type="Script" path="res://player/playerShip.gd" id="1_amsbr"]
+[ext_resource type="PackedScene" uid="uid://buhs2jeorpteh" path="res://player/ship_parts/hulls/na_default_hull.tscn" id="2_d85cb"]
+[ext_resource type="PackedScene" uid="uid://646mhl2eh75h" path="res://player/ship_parts/lw/na_default_lw.tscn" id="3_dqt17"]
+[ext_resource type="PackedScene" uid="uid://dek1gscd0u0e1" path="res://player/ship_parts/colliders/lw/na_default_lw_collider.tscn" id="3_k7pdp"]
+[ext_resource type="PackedScene" uid="uid://cr4qa81f5swym" path="res://player/ship_parts/colliders/rw/na_default_rw_collider.tscn" id="4_0lraw"]
+[ext_resource type="PackedScene" uid="uid://dst6age0h6s70" path="res://player/ship_parts/rw/na_default_rw.tscn" id="4_f4vtt"]
+[ext_resource type="PackedScene" uid="uid://cj3kbaaj4va3y" path="res://player/weapons/gun.tscn" id="5_dqohc"]
+[ext_resource type="PackedScene" uid="uid://ceb7uihp1nkwq" path="res://player/ship_parts/colliders/hull/na_default_hull_collider.tscn" id="6_88bgi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_pi2ax"]
+friction = 0.1
+bounce = 0.05
+
+[node name="playerShip" type="RigidBody2D" groups=["player"]]
+z_index = 2
+texture_filter = 1
+collision_mask = 20
+mass = 20.0
+physics_material_override = SubResource("PhysicsMaterial_pi2ax")
+gravity_scale = 0.0
+script = ExtResource("1_amsbr")
+
+[node name="NaDefaultHullCollider" parent="." instance=ExtResource("6_88bgi")]
+metadata/_edit_lock_ = true
+
+[node name="NaDefaultLwCollider" parent="." instance=ExtResource("3_k7pdp")]
+position = Vector2(24, -8)
+rotation = 3.14159
+metadata/_edit_lock_ = true
+
+[node name="NaDefaultRwCollider" parent="." instance=ExtResource("4_0lraw")]
+position = Vector2(-24, -8)
+rotation = 3.14159
+polygon = PackedVector2Array(38, 12, 38, -1, 36, -1, 36, 0, 0, -8, -12, -8, -12, 11, -7.72972, 10.6118, 10, 9, 22, 9)
+metadata/_edit_lock_ = true
+
+[node name="NaDefaultHull" parent="." instance=ExtResource("2_d85cb")]
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -50)
+
+[node name="NaDefaultLw" parent="." instance=ExtResource("3_dqt17")]
+position = Vector2(24, -8)
+rotation = 3.14159
+metadata/_edit_lock_ = true
+
+[node name="NaDefaultRw" parent="." instance=ExtResource("4_f4vtt")]
+position = Vector2(-24, -8)
+rotation = 3.14159
+metadata/_edit_lock_ = true
+
+[node name="InvincibleTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="StunTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Gun" parent="." instance=ExtResource("5_dqohc")]
+position = Vector2(0, -33)
+scale = Vector2(2, 2)
+
+[connection signal="timeout" from="InvincibleTimer" to="." method="_on_invincible_timer_timeout"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
