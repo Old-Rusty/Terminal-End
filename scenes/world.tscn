@@ -34,7 +34,7 @@ curve = SubResource("Curve2D_roxpa")
 script = ExtResource("5_6ghg7")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(900.586, 119.963)
+position = Vector2(900.586, 119.964)
 rotation = 1.5708
 progress = 2868.88
 
