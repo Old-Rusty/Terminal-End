@@ -4,7 +4,7 @@ extends RigidBody2D
 @onready var stunArea: CollisionShape2D = $StunRange/CollisionShape2D
 @onready var ramArea: CollisionShape2D = $RamRange/CollisionShape2D
 
-var _pid = Pid2D.new(1.0, 0.1, 2.0)
+var _pid = Pid2D.new(2.0, 0.1, 4.0)
 var target: Node2D  # Reference to the player node
 
 var target_dir: Vector2
@@ -50,37 +50,33 @@ func _physics_process(delta: float) -> void:
 
 	if state == States.RAMMING:
 		rotation = lerp_angle(rotation, impulse.angle(), 0.05)
-		apply_central_impulse(impulse * delta * 0.5)
+		apply_central_impulse(impulse * delta)
 		print("ram")
-	
-	
 
 
-
-
-func _on_hurt_box_area_entered(area):
+func _on_hurt_box_area_entered(area: Area2D) -> void:
 	call_deferred("free")
 
 
-func _on_stun_timer_timeout():
+func _on_stun_timer_timeout() -> void:
 	state = States.NORMAL
 	ramArea.disabled = false
 	stunArea.disabled = false
-	
 
 
-func _on_stun_range_area_entered(area):
-	ramArea.disabled = true
-	stunArea.disabled = true
-	stunTimer.start()
-	state = States.STUNNED
-
-func _on_ram_range_area_entered(area):
+func _on_ram_range_area_entered(area: Area2D) -> void:
 	state = States.RAMMING
 	impulse = (target_dir + prediction_element) * thrustF
 
 
 
-func _on_ram_range_area_exited(area):
+func _on_ram_range_area_exited(area: Area2D) -> void:
 	if ramArea.disabled == false:
 		state = States.NORMAL
+
+
+func _on_stun_range_body_entered(body: RigidBody2D) -> void:
+	ramArea.disabled = true
+	stunArea.disabled = true
+	stunTimer.start()
+	state = States.STUNNED

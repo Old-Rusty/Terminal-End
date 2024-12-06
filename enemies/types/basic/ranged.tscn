@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://cok4yfpvf88jv"]
+
+[ext_resource type="Texture2D" uid="uid://d3dkctvw44m6v" path="res://icon.svg" id="1_b6my6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tjcgg"]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dkeac"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_338ke"]
+radius = 448.071
+
+[node name="Ranged" type="RigidBody2D" groups=["enemy"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_b6my6")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_tjcgg")
+
+[node name="HurtBox" type="Area2D" parent="." groups=["enemy"]]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_dkeac")
+debug_color = Color(0.972549, 0, 0.45098, 0.419608)
+
+[node name="stunTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="KitingRange" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KitingRange"]
+shape = SubResource("CircleShape2D_338ke")
+debug_color = Color(0.596078, 0.545098, 0, 0.419608)

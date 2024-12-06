@@ -26,6 +26,11 @@ envp="*res://common/variables/enviornment_para.gd"
 
 window/size/mode=3
 
+[global_group]
+
+enemy=""
+player=""
+
 [input]
 
 move_left={

@@ -51,7 +51,7 @@ func _state_check(delta) -> void:
 	elif state == States.STUNNED:
 		angularMomentum = 0
 		current_thrust = 0
-		correction = _pid.update(Vector2.ZERO, delta)
+		correction = Vector2.ZERO
 
 func _ichecker() -> void:
 	if invincible == true:
@@ -76,7 +76,8 @@ func _on_hurt_box_area_entered(area):
 
 func _on_stun_timer_timeout():
 	state = States.NORMAL
-
+	angularMomentum = 0
+	current_thrust = 0
 
 func _on_invincible_timer_timeout():
 	invincible = false
