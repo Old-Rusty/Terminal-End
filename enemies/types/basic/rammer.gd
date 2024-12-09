@@ -15,7 +15,6 @@ var correction: Vector2
 var thrust: Vector2
 var impulse: Vector2
 
-var ramming: bool = false
 var thrustF: float = enep.thrust1
 var ramF: float = enep.ram1
 
@@ -32,12 +31,11 @@ func _physics_process(delta: float) -> void:
 		return
 	target_dir = target.global_position - self.global_position
 	prediction_element = (target.linear_velocity - self.linear_velocity) * delta
-	
+	target_velocity = (target_dir + prediction_element) * thrustF
+	error =  target_velocity - self.linear_velocity
+	correction = _pid.update(error, delta) * delta
 	
 	if state == States.NORMAL:
-		target_velocity = (target_dir + prediction_element) * thrustF
-		error =  target_velocity - self.linear_velocity
-		correction = _pid.update(error, delta) * delta
 		thrust = correction
 		rotation = lerp_angle(rotation, correction.angle(), 0.05)
 		apply_central_force(thrust)
